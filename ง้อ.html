@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#ยกเลิกการแบนอิงจากร้านแรป</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url("chiikawa-usagi.gif") center top / cover repeat;
+            animation: gradientMove 3s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .character {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .character-img {
+            width: 200px;
+            height: 200px;
+            background: #ffb3ba;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            overflow: hidden;
+        }
+
+        .character-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }   
+
+        .sign {
+            background: white;
+            border: 3px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+        }
+
+        .sign h2 {
+            color: #e74c3c;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tears {
+            position: absolute;
+            font-size: 30px;
+            color: #3498db;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .tear1 { top: 50px; left: 70px; }
+        .tear2 { top: 60px; right: 70px; }
+        .tear3 { top: 80px; left: 60px; }
+        .tear4 { top: 85px; right: 60px; }
+        .tear5 { top: 100px; left: 80px; }
+        .tear6 { top: 105px; right: 80px; }
+
+        .input-section {
+            margin: 25px 0;
+        }
+
+        .input-section textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-section textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        .response {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .angry {
+            background: #ff6b6b;
+            color: white;
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .contract {
+            background: #f8f9fa;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: left;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .contract h3 {
+            text-align: center;
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .contract p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .signature-section {
+            border-top: 2px solid #333;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+
+        .signature-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #333;
+            background: transparent;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .celebration {
+            display: none;
+            color: #27ae60;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="character">
+            <div class="character-img" id="character">
+                <img src="101894.jpg" alt="ปกติ" id="characterImage">
+                <div class="tears tear1">💧</div>
+                <div class="tears tear2">💧</div>
+                <div class="tears tear3">💧</div>
+                <div class="tears tear4">💧</div>
+                <div class="tears tear5">💧</div>
+                <div class="tears tear6">💧</div>
+            </div>
+        </div>
+
+        <div class="sign">
+            <h2>#ยกเลิกการแบนอิงจากร้านแรป</h2>
+        </div>
+
+        <div class="input-section" id="inputSection">
+            <textarea id="messageInput" placeholder="กรุณาใส่ข้อความของคุณที่นี่..."></textarea>
+            <br><br>
+            <button class="submit-btn" onclick="processMessage()">ส่งข้อความ</button>
+        </div>
+
+        <div class="response" id="response"></div>
+
+        <div class="contract" id="contract">
+            <h3>📜 สัญญายกเลิกการแบน 📜</h3>
+            <p><strong>เรื่อง:</strong> การยกเลิกการแบนอิงจากร้านแรป</p>
+            <p>ข้าพเจ้าขอประกาศให้ทราบว่า <strong>อิงถูกยกเลิกการแบนจากร้านแรกโดยสมบูรณ์แบบ</strong> ตั้งแต่วันที่ลงนามในสัญญานี้</p>
+            <p>น้องเฟรชจะยอมทำแรปให้อิงตามปกติ</p>
+            <div class="signature-section">
+                <p><strong>ลงชื่อ:</strong></p>
+                <input type="text" class="signature-input" id="signature" placeholder="กรุณาลงชื่อของคุณ">
+                <br><br>
+                <button class="submit-btn" onclick="finalSubmit()">ยืนยันการลงชื่อ</button>
+            </div>
+        </div>
+
+        <div class="celebration" id="celebration">
+            🎉 เย้้้ รักอ้วนที่สุดเล้ยยยย! 🎉
+        </div>
+    </div>
+
+    <script>
+        let tearLevel = 0;
+        let allResponses = [];
+
+        function processMessage() {
+        const message = document.getElementById('messageInput').value.trim().toLowerCase();
+        const responseDiv = document.getElementById('response');
+        const character = document.getElementById('character');
+        const characterImage = document.getElementById('characterImage');
+            
+        if (!message) {
+            alert('ใส่ข้อความก่อนสิ้้้');
+            return;
+        }
+
+        // เก็บข้อความสำหรับส่งในภายหลัง
+        allResponses.push({
+            timestamp: new Date(),
+            message: document.getElementById('messageInput').value,
+            type: 'user_input'
+        });
+
+        // ตรวจสอบคำตอบ
+        if (isPositiveResponse(message)) {
+            showContract();
+        } else if (isNegotiationResponse(message)) {
+            showAngryResponse(responseDiv, character, characterImage);
+        } else {
+            showSadResponse(responseDiv, character, characterImage);
+        }
+
+        // ✅ เคลียร์ทุกกรณี
+        document.getElementById('messageInput').value = '';
+        }
+
+
+        function isPositiveResponse(message) {
+            const positiveWords = ['ใช่', 'ตกลง', 'ok', 'โอเค', 'ยอมรับ', 'เห็นด้วย', 'ได้', 'ขอให้กลับมา', 'ยกเลิกแบน', 'ก็ได้'];
+            return positiveWords.some(word => message.includes(word));
+        }
+
+        function isNegotiationResponse(message) {
+            const negotiationWords = ['แต่', 'ถ้า', 'แลกเปลี่ยน', 'เงื่อนไข', 'ต่อรอง', 'ขอ', 'แก้ไข', 'เปลี่ยน', 'ทำตัวให้มันน่ารัก', 'อม', 'โม๊ค'];
+            return negotiationWords.some(word => message.includes(word));
+        }
+
+        function showSadResponse(responseDiv, character, characterImage) {
+            tearLevel++;
+            
+            // เปลี่ยนรูปเป็นหน้าเสียใจ
+            characterImage.src = '101890.jpg';
+            
+            // แสดงน้ำตา
+            const tears = document.querySelectorAll('.tears');
+            for (let i = 0; i < Math.min(tearLevel, tears.length); i++) {
+                tears[i].style.opacity = '1';
+                tears[i].style.animation = 'fall 2s ease infinite';
+            }
+
+            const sadMessages = [
+                'ไม่หายยกเลิกให้เค้าจริงหรอคะ',
+                'น้องอ้วน ง้อๆ',
+                'เค้าสัญญาว่าจะเป็นเด็กดี',
+                'อยากทานแรปปปปปปปปป',
+                'ยกเลิกการแบนให้เค้าหน่อยนะคะ',
+            ];
+
+            const randomMessage = sadMessages[Math.floor(Math.random() * sadMessages.length)];
+            responseDiv.innerHTML = randomMessage;
+            responseDiv.className = 'response';
+            responseDiv.style.background = '#e8f4fd';
+            responseDiv.style.color = '#2980b9';
+            
+            // เก็บ response
+            allResponses.push({
+                timestamp: new Date(),
+                response: randomMessage,
+                type: 'sad_response',
+                tearLevel: tearLevel
+            });
+        }
+
+        function showAngryResponse(responseDiv, character, characterImage){
+        characterImage.src='101893.jpg';
+            
+        // ข้อความต่อรอง/โกรธ แบบสุ่ม ยกเว้น "ขอคิดดูก่อน"
+        let angryMessages=['เย้ยยย! ทำไมอ้วนขี้ต่อรอง','บุ้บุ้','หืมมม ต้องคิดอีกเหรอ?','ไม่ง่ายแบบนั้นนะ!'];
+
+        // ถ้าข้อความคือ "ขอคิดดูก่อน" ให้สุ่มตอบข้อความอื่น
+        const userMessage = document.getElementById('messageInput').value.trim().toLowerCase();
+        let randomMessage;
+        if(userMessage === 'ขอคิดดูก่อน'){
+            randomMessage = angryMessages[Math.floor(Math.random() * angryMessages.length)];
+        } else {
+            // ปกติ random จาก angryMessages
+            randomMessage = angryMessages[Math.floor(Math.random() * angryMessages.length)];
+        }
+
+        responseDiv.innerHTML=randomMessage;
+        responseDiv.className='response angry';
+
+        allResponses.push({
+            timestamp:new Date(),
+            response:randomMessage,
+            type:'angry_response'
+        });
+
+        // ส่งข้อมูลไปเจ้าของ
+        setTimeout(()=>{ sendToOwner('negotiation_attempt'); }, 2000);
+    }
+
+        function showContract() {
+            document.getElementById('inputSection').style.display = 'none';
+            document.getElementById('response').style.display = 'none';
+            document.getElementById('contract').style.display = 'block';
+            
+            // เปลี่ยนรูปเป็นหน้าดีใจ
+            document.getElementById('characterImage').src = '101891.jpg';
+            
+            // ซ่อนน้ำตา
+            document.querySelectorAll('.tears').forEach(tear => {
+                tear.style.opacity = '0';
+            });
+
+            allResponses.push({
+                timestamp: new Date(),
+                type: 'positive_response',
+                action: 'contract_shown'
+            });
+        }
+
+        function finalSubmit() {
+            const signature = document.getElementById('signature').value.trim();
+            if (!signature) {
+                alert('กรุณาลงชื่อก่อนนะ!');
+                return;
+            }
+
+            // แสดงการเฉลิมฉลอง
+            document.getElementById('contract').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+
+            allResponses.push({
+                timestamp: new Date(),
+                signature: signature,
+                type: 'contract_signed'
+            });
+
+            // ส่งข้อมูลทั้งหมดไปให้เจ้าของ
+            sendToOwner('success');
+        }
+
+        function sendToOwner(type) {
+            // ส่งข้อมูลไปยัง Email ของเจ้าของโดยตรง
+            const emailData = {
+                type: type,
+                responses: allResponses,
+                timestamp: new Date().toLocaleString('th-TH'),
+                userAgent: navigator.userAgent
+            };
+            
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                to_email: 'process.env.MY_EMAIL',
+                subject: type === 'success' ? '🎉 มีคนเซ็นสัญญายกเลิกการแบน!' : '📨 มีคนพยายามต่อรอง',
+                message: JSON.stringify(emailData, null, 2)
+            });
+            
+
+            console.log('[ส่งไปยังเจ้าของ]', emailData);
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(20px); opacity: 0.3; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</htm
